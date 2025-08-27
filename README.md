@@ -1,0 +1,299 @@
+# html2pdf
+
+A Node.js module for converting HTML content to PDF format with customizable options.
+
+## Features
+
+- Convert HTML elements to PDF files
+- Customizable page size, orientation, and margins
+- TypeScript support with full type definitions
+- Promise-based API
+- Comprehensive error handling
+
+## Installation
+
+```bash
+npm install html2pdf
+```
+
+## Usage
+
+### Basic Usage
+
+#### Sample HTML
+```
+<html>
+  <body id="convert_to_pdf">
+    <h1>Hello World!</h1>
+    <p>This is a test document.</p>
+  </body>
+</html>
+```
+
+```typescript
+import { htmlToPdf } from 'html2pdf';
+
+const result = await htmlToPdf({
+  id: "convert_to_pdf",
+  outputPath: 'output.pdf'
+});
+
+if (result.success) {
+  console.log(`PDF created successfully: ${result.outputPath}`);
+} else {
+  console.error(`Error: ${result.error}`);
+}
+```
+
+### Advanced Usage with Custom Options
+
+```typescript
+import { htmlToPdf } from 'html2pdf';
+
+const result = await htmlToPdf({
+  id: "convert_to_pdf",
+  outputPath: 'custom.pdf',
+  widthOffset: 10,
+  heighOffset: 10,
+  orientation: 'portrait', //can be 'landscape' or 'portrait'
+});
+```
+
+## API Reference
+
+### `htmlToPdf(options: HtmlToPdfOptions): Promise<HtmlToPdfResult>`
+
+Converts HTML content to PDF format.
+
+#### Options
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `id` | `string` | **required** | ID of html element to convert to PDF |
+| `orientation` | `'portrait' \| 'landscape'` | **required** | Page orientation |
+| `outputPath` | `string` | **required** | Output file path |
+| `widthOffset` | `number` | Offset from width of page |
+| `heightOffset` | `number` | Offset from width of page |
+
+#### Return Value
+
+Returns a promise that resolves to an object with:
+
+- `success: boolean` - Whether the conversion was successful
+- `outputPath?: string` - Path to the generated PDF file (if successful)
+- `error?: string` - Error message (if failed)
+
+### `htmlFileToPdf(inputPath: string, options?: Partial<HtmlToPdfOptions>): Promise<HtmlToPdfResult>`
+
+Converts an HTML file to PDF format.
+
+> **Note:** This function is not yet implemented and will return an error.
+
+## Development
+
+### Prerequisites
+
+- Node.js 16.0.0 or higher
+- npm or yarn
+- jsPDF
+- html2canvas
+
+### Setup
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Available Scripts
+
+- `npm run build` - Build the TypeScript code
+- `npm run dev` - Watch mode for development
+- `npm test` - Run tests
+- `npm run lint` - Run ESLint
+- `npm run clean` - Clean build directory
+
+### Building
+
+```bash
+npm run build
+```
+
+The compiled JavaScript will be output to the `dist/` directory.
+
+## Testing
+
+This project includes comprehensive testing with both automated Jest tests and browser-based testing capabilities.
+
+### Automated Testing (Jest)
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+Run tests with coverage:
+
+```bash
+npm test -- --coverage
+```
+
+#### Test Cases
+
+The test suite covers the following scenarios:
+
+| Test Case | Description | Expected Result |
+|-----------|-------------|-----------------|
+| **Basic Conversion** | Tests successful HTML to PDF conversion | ✅ Success with `thisisawesome.pdf` |
+| **Empty ID Validation** | Tests error handling for missing element ID | ❌ Error: "The id of the html element is required" |
+| **Default Values** | Tests default option handling | ✅ Success with default settings |
+| **Custom Page Settings** | Tests A3 landscape with offsets | ✅ Success with custom page configuration |
+| **Width/Height Offsets** | Tests margin offset functionality | ✅ Success with offset calculations |
+
+#### Test Environment
+
+- **Test Framework**: Jest with TypeScript support
+- **Environment**: jsdom (simulates browser DOM)
+- **Mocking**: html2canvas and jsPDF are mocked for controlled testing
+- **Coverage**: Full test coverage for all public functions
+
+### Browser Testing
+
+For manual testing and visual verification, use the included HTML test files:
+
+#### 1. Simple Test (`simple-test.html`)
+
+A comprehensive test page with advanced CSS styling:
+
+- **Features**: Gradients, typography, layouts, shadows, tables
+- **Content**: Feature cards, data tables, technical information
+- **Styling**: CSS Grid, Flexbox, responsive design, animations
+- **Output**: Generates `thisisawesome.pdf`
+
+**Access**: `http://localhost:8080/simple-test.html`
+
+#### 2. Demo Test (`demo.html`)
+
+Advanced testing interface with multiple conversion options:
+
+- **Controls**: Page size, orientation, offset adjustments
+- **Real-time**: Live preview and conversion testing
+- **Debugging**: Comprehensive console logging
+
+**Access**: `http://localhost:8080/demo.html`
+
+#### Browser Testing Setup
+
+1. **Start Local Server**:
+   ```bash
+   npx http-server . -p 8080 -c-1
+   ```
+
+2. **Access Test Pages**:
+   - Simple Test: `http://localhost:8080/simple-test.html`
+   - Demo: `http://localhost:8080/demo.html`
+
+3. **Test PDF Generation**:
+   - Click "Test Module Import" button
+   - Check browser console for detailed logs
+   - Verify PDF download with filename `thisisawesome.pdf`
+
+#### Browser Testing Features
+
+- **CORS Compliance**: Local HTTP server bypasses file:// restrictions
+- **Library Loading**: CDN-loaded html2canvas and jsPDF
+- **Error Handling**: Comprehensive error logging and user feedback
+- **Cross-Browser**: Tested on Chrome, Firefox, Edge
+- **Responsive**: Mobile-friendly test interfaces
+
+### Testing Dependencies
+
+```json
+{
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  }
+}
+```
+
+### Quick Testing Workflow
+
+1. **Run Automated Tests**:
+   ```bash
+   npm test                    # Run all tests
+   npm test -- --watch        # Watch mode for development
+   npm test -- --coverage     # Generate coverage report
+   ```
+
+2. **Start Browser Testing**:
+   ```bash
+   npx http-server . -p 8080 -c-1
+   ```
+
+3. **Test in Browser**:
+   - Navigate to `http://localhost:8080/simple-test.html`
+   - Click "Test Module Import" button
+   - Verify PDF download: `thisisawesome.pdf`
+   - Check browser console for detailed logs
+
+4. **Verify Results**:
+   - ✅ All Jest tests pass
+   - ✅ PDF downloads successfully
+   - ✅ Console shows no errors
+   - ✅ Generated PDF maintains styling
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass
+6. Submit a pull request
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## TODO
+
+- [x] Implement actual HTML to PDF conversion logic
+- [x] Add comprehensive testing suite (Jest + Browser)
+- [x] Add advanced CSS styling support
+- [x] Add page size and orientation options
+- [x] Add width/height offset controls
+- [ ] Add watermark support
+- [ ] Add password protection
+- [ ] Add compression options
+- [ ] Add batch processing capabilities
+- [ ] Add more page size options (A0, A1, A2, etc.)
+
+## Dependencies
+
+### Runtime Dependencies
+
+- **[html2canvas](https://github.com/niklasvh/html2canvas)** - Converts HTML elements to canvas images
+- **[jsPDF](https://github.com/parallax/jsPDF)** - Generates PDF documents from images and data
+
+### Development Dependencies
+
+- **TypeScript** - Type safety and compilation
+- **Jest** - Testing framework with jsdom environment
+- **ESLint** - Code quality and consistency
+- **ts-jest** - TypeScript support for Jest
+
+### Installation
+
+```bash
+npm install html2canvas jspdf
+npm install --save-dev typescript jest ts-jest jest-environment-jsdom @types/jest eslint
+```
+
+## Support
+
+If you encounter any issues or have questions, please [open an issue](https://github.com/yourusername/html2pdf/issues) on GitHub. 

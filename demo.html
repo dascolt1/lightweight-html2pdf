@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML2PDF Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        #content-to-convert {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .demo-section {
+            background-color: #ecf0f1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+        }
+        .controls {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        label {
+            font-weight: bold;
+            min-width: 120px;
+        }
+        select, input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .result {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: monospace;
+        }
+        .success {
+            border-left: 5px solid #27ae60;
+            background-color: #d5f4e6;
+        }
+        .error {
+            border-left: 5px solid #e74c3c;
+            background-color: #fadbd8;
+        }
+        .loading {
+            border-left: 5px solid #f39c12;
+            background-color: #fef9e7;
+        }
+    </style>
+</head>
+<body>
+    <div id="content-to-convert">
+        <h1>HTML2PDF Demo Document</h1>
+        
+        <div class="demo-section">
+            <h2>📄 Sample Content</h2>
+            <p>This is a demonstration of the HTML to PDF conversion functionality. The content below will be converted to a PDF document.</p>
+            <ul>
+                <li><strong>Text formatting:</strong> Bold, italic, and regular text</li>
+                <li><strong>Lists:</strong> Both ordered and unordered lists</li>
+                <li><strong>Styling:</strong> Colors, borders, and spacing</li>
+                <li><strong>Layout:</strong> Responsive design elements</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎨 Styling Examples</h2>
+            <p style="color: #e74c3c; font-weight: bold;">This text is red and bold</p>
+            <p style="color: #27ae60; font-style: italic;">This text is green and italic</p>
+            <div style="background-color: #f39c12; color: white; padding: 10px; border-radius: 5px; text-align: center;">
+                This is a highlighted box with custom styling
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>📊 Data Table</h2>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background-color: #34495e; color: white;">
+                        <th style="padding: 12px; border: 1px solid #ddd;">Name</th>
+                        <th style="padding: 12px; border: 1px solid #ddd;">Age</th>
+                        <th style="padding: 12px; border: 1px solid #ddd;">City</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">John Doe</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">30</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">New York</td>
+                    </tr>
+                    <tr style="background-color: #f8f9fa;">
+                        <td style="padding: 12px; border: 1px solid #ddd;">Jane Smith</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">25</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Los Angeles</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔧 Technical Details</h2>
+            <p>This demo uses:</p>
+            <ul>
+                <li><strong>html2canvas:</strong> Converts HTML to canvas</li>
+                <li><strong>jsPDF:</strong> Generates the final PDF</li>
+                <li><strong>Custom styling:</strong> CSS for visual appeal</li>
+                <li><strong>Responsive design:</strong> Works on different screen sizes</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="controls">
+        <h3>⚙️ Conversion Options</h3>
+        
+        <div class="control-group">
+            <label>Page Size:</label>
+            <select id="pageSize">
+                <option value="A4">A4 (Default)</option>
+                <option value="A3">A3</option>
+                <option value="Letter">Letter</option>
+                <option value="Legal">Legal</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Orientation:</label>
+            <select id="orientation">
+                <option value="portrait">Portrait (Default)</option>
+                <option value="landscape">Landscape</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Width Offset:</label>
+            <input type="number" id="widthOffset" value="0" min="0" max="200" step="10">
+        </div>
+
+        <div class="control-group">
+            <label>Height Offset:</label>
+            <input type="number" id="heightOffset" value="0" min="0" max="200" step="10">
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="convertBtn">🚀 Convert to PDF</button>
+            <button id="resetBtn" style="background-color: #95a5a6;">🔄 Reset</button>
+        </div>
+    </div>
+
+    <div id="result" class="result" style="display: none;"></div>
+
+                    <!-- Include CDN versions of required libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        
+        <!-- Include your built module -->
+        <script type="module">
+            import { htmlToPdf } from './dist/index.js';
+            
+            // Make it available globally
+            window.htmlToPdf = htmlToPdf;
+            
+            // Define functions globally
+            window.convertToPDF = async function() {
+                console.log('convertToPDF function called!');
+                
+                const convertBtn = document.getElementById('convertBtn');
+                const resultDiv = document.getElementById('result');
+                
+                // Get form values
+                const pageSize = document.getElementById('pageSize').value;
+                const orientation = document.getElementById('orientation').value;
+                const widthOffset = parseInt(document.getElementById('widthOffset').value);
+                const heightOffset = parseInt(document.getElementById('heightOffset').value);
+                
+                console.log('Form values:', { pageSize, orientation, widthOffset, heightOffset });
+                
+                // Show loading state
+                convertBtn.disabled = true;
+                convertBtn.textContent = '⏳ Converting...';
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result loading';
+                resultDiv.innerHTML = '<strong>Converting...</strong><br>Please wait while your HTML is converted to PDF...';
+                
+                try {
+                    console.log('Calling htmlToPdf function...');
+                    console.log('htmlToPdf function:', window.htmlToPdf);
+                    
+                    const result = await window.htmlToPdf({
+                        id: 'content-to-convert',
+                        outputPath: `demo-${Date.now()}.pdf`,
+                        pageSize: pageSize,
+                        orientation: orientation,
+                        widthOffset: widthOffset,
+                        heightOffset: heightOffset
+                    });
+                    
+                    console.log('Conversion result:', result);
+                    
+                    if (result.success) {
+                        resultDiv.className = 'result success';
+                        resultDiv.innerHTML = `
+                            <strong>✅ Success!</strong><br>
+                            PDF generated successfully!<br>
+                            <strong>Output:</strong> ${result.outputPath}<br>
+                            <small>Check your Downloads folder for the PDF file.</small>
+                        `;
+                        console.log('✅ PDF conversion successful!');
+                    } else {
+                        resultDiv.className = 'result error';
+                        resultDiv.innerHTML = `
+                            <strong>❌ Error!</strong><br>
+                            ${result.error}
+                        `;
+                        console.error('❌ PDF conversion failed:', result.error);
+                    }
+                } catch (error) {
+                    console.error('❌ Exception during conversion:', error);
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `
+                        <strong>❌ Error!</strong><br>
+                        ${error.message}
+                    `;
+                } finally {
+                    // Reset button state
+                    convertBtn.disabled = false;
+                    convertBtn.textContent = '🚀 Convert to PDF';
+                }
+            };
+            
+            // Define resetForm globally
+            window.resetForm = function() {
+                document.getElementById('pageSize').value = 'A4';
+                document.getElementById('orientation').value = 'portrait';
+                document.getElementById('widthOffset').value = '0';
+                document.getElementById('heightOffset').value = '0';
+                document.getElementById('result').style.display = 'none';
+            };
+            
+            // Add event listeners after module loads
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add click event to convert button
+                document.getElementById('convertBtn').addEventListener('click', window.convertToPDF);
+                
+                // Add click event to reset button
+                document.getElementById('resetBtn').addEventListener('click', window.resetForm);
+                
+                console.log('Functions loaded and event listeners attached:', {
+                    convertToPDF: typeof window.convertToPDF,
+                    resetForm: typeof window.resetForm,
+                    htmlToPdf: typeof window.htmlToPdf
+                });
+                
+                // Test if the module is working
+                console.log('Testing module import...');
+                try {
+                    console.log('htmlToPdf function:', window.htmlToPdf);
+                    console.log('Module should be ready!');
+                } catch (error) {
+                    console.error('Error with module:', error);
+                }
+            });
+        </script>
+</body>
+</html> 
