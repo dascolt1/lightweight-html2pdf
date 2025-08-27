@@ -35,7 +35,9 @@ import { htmlToPdf } from 'html2pdf';
 
 const result = await htmlToPdf({
   id: "convert_to_pdf",
-  outputPath: 'output.pdf'
+  outputPath: 'output.pdf',
+  pageSize: 'A4',
+  orientation: 'portrait'
 });
 
 if (result.success) {
@@ -53,9 +55,10 @@ import { htmlToPdf } from 'html2pdf';
 const result = await htmlToPdf({
   id: "convert_to_pdf",
   outputPath: 'custom.pdf',
+  pageSize: 'A3',
+  orientation: 'landscape',
   widthOffset: 10,
-  heighOffset: 10,
-  orientation: 'portrait', //can be 'landscape' or 'portrait'
+  heightOffset: 10
 });
 ```
 
@@ -70,10 +73,11 @@ Converts HTML content to PDF format.
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `id` | `string` | **required** | ID of html element to convert to PDF |
-| `orientation` | `'portrait' \| 'landscape'` | **required** | Page orientation |
 | `outputPath` | `string` | **required** | Output file path |
-| `widthOffset` | `number` | Offset from width of page |
-| `heightOffset` | `number` | Offset from width of page |
+| `pageSize` | `'A4' \| 'A3' \| 'Letter' \| 'Legal'` | `'A4'` | Page size |
+| `orientation` | `'portrait' \| 'landscape'` | `'portrait'` | Page orientation |
+| `widthOffset` | `number` | `0` | Offset from page width |
+| `heightOffset` | `number` | `0` | Offset from page height |
 
 #### Return Value
 
@@ -146,7 +150,7 @@ The test suite covers the following scenarios:
 
 | Test Case | Description | Expected Result |
 |-----------|-------------|-----------------|
-| **Basic Conversion** | Tests successful HTML to PDF conversion | ✅ Success with `thisisawesome.pdf` |
+| **Basic Conversion** | Tests successful HTML to PDF conversion | ✅ Success with `lightweight-html2pdf.pdf` |
 | **Empty ID Validation** | Tests error handling for missing element ID | ❌ Error: "The id of the html element is required" |
 | **Default Values** | Tests default option handling | ✅ Success with default settings |
 | **Custom Page Settings** | Tests A3 landscape with offsets | ✅ Success with custom page configuration |
