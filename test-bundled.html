@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Bundled Library</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #content { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        button { 
+            padding: 15px 30px; 
+            margin: 10px; 
+            font-size: 16px; 
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background: #45a049; }
+        .status { 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Test Bundled Library</h1>
+    
+    <div class="status">
+        <strong>Status:</strong> <span id="status">Loading...</span>
+    </div>
+    
+    <div id="content">
+        <h2>Sample Content for PDF</h2>
+        <p>This is a test page to verify the bundled library works correctly.</p>
+        <p>Current time: <span id="current-time"></span></p>
+        <ul>
+            <li>✅ Library is bundled</li>
+            <li>✅ No need to push to npm for testing</li>
+            <li>✅ Dependencies loaded from CDN</li>
+        </ul>
+    </div>
+    
+    <button onclick="convertToPDF()">Convert to PDF</button>
+    
+    <div id="output"></div>
+
+    <!-- Load our bundled library (includes all dependencies) -->
+    <script src="dist/lightweight-html2pdf.bundle.js"></script>
+    
+    <script>
+        // Update time
+        function updateTime() {
+            document.getElementById('current-time').textContent = new Date().toLocaleString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Check if everything loaded
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const status = document.getElementById('status');
+                
+                if (typeof window.LightweightHtml2Pdf !== 'undefined') {
+                    status.textContent = '✅ Bundled library loaded';
+                    status.style.color = 'green';
+                } else {
+                    status.textContent = '❌ Bundled library failed to load';
+                    status.style.color = 'red';
+                }
+                
+                status.textContent += ' | ✅ Dependencies bundled (no CDN needed)';
+            }, 1000);
+        });
+        
+        function convertToPDF() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<div class="status">🔄 Converting...</div>';
+            
+            try {
+                // Use the bundled library
+                const { htmlToPdf } = window.LightweightHtml2Pdf;
+                
+                htmlToPdf({
+                    id: 'content',
+                    outputPath: 'test-bundled.pdf',
+                    pageSize: 'A4',
+                    orientation: 'portrait'
+                }).then(result => {
+                    if (result.success) {
+                        output.innerHTML = '<div class="status" style="border-left-color: #28a745;">✅ PDF generated successfully!</div>';
+                    } else {
+                        output.innerHTML = '<div class="status" style="border-left-color: #dc3545;">❌ Error: ' + result.error + '</div>';
+                    }
+                }).catch(error => {
+                    output.innerHTML = '<div class="status" style="border-left-color: #dc3545;">❌ Exception: ' + error.message + '</div>';
+                });
+                
+            } catch (error) {
+                output.innerHTML = '<div class="status" style="border-left-color: #dc3545;">❌ Library error: ' + error.message + '</div>';
+            }
+        }
+    </script>
+</body>
+</html> 

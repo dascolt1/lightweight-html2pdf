@@ -1,16 +1,10 @@
 /**
  * HTML to PDF Converter
  * A lightweight, fast browser module for converting HTML to PDF
- * Uses global html2canvas and jsPDF from CDN
+ * Dependencies are bundled with the library
  */
-
-// Declare global types for the CDN-loaded libraries
-declare global {
-  interface Window {
-    html2canvas: any;
-    jsPDF: any;
-  }
-}
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 export interface HtmlToPdfOptions {
   /** ID of the HTML element to convert */
@@ -43,15 +37,6 @@ export interface HtmlToPdfResult {
  */
 export async function htmlToPdf(options: HtmlToPdfOptions): Promise<HtmlToPdfResult> {
   try {
-    // Check if required libraries are available
-    if (typeof window.html2canvas === 'undefined') {
-      throw new Error('html2canvas library not loaded. Make sure to include the CDN script.');
-    }
-    
-    if (typeof window.jsPDF === 'undefined') {
-      throw new Error('jsPDF library not loaded. Make sure to include the CDN script.');
-    }
-
     const {
       id,
       outputPath,
@@ -80,7 +65,7 @@ export async function htmlToPdf(options: HtmlToPdfOptions): Promise<HtmlToPdfRes
     console.log('Element dimensions:', element.offsetWidth, 'x', element.offsetHeight);
 
     // Convert HTML to canvas using html2canvas
-    const canvas = await window.html2canvas(element, {
+    const canvas = await html2canvas(element, {
       scale: 2,
       backgroundColor: '#ffffff',
       width: element.offsetWidth + widthOffset,
@@ -93,7 +78,7 @@ export async function htmlToPdf(options: HtmlToPdfOptions): Promise<HtmlToPdfRes
     console.log('Canvas created:', canvas.width, 'x', canvas.height);
 
     // Create PDF document
-    const pdf = new window.jsPDF({
+    const pdf = new jsPDF({
       orientation: orientation,
       unit: 'pt',
       format: pageSize

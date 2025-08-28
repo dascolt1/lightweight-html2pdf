@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Debug - Check if html2canvas and jsPDF are loaded</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+        #debug-output { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Library Loading Debug</h1>
+    
+    <div id="status"></div>
+    
+    <button onclick="checkLibraries()">Check Libraries</button>
+    <button onclick="testConversion()">Test PDF Conversion</button>
+    
+    <div id="debug-output"></div>
+
+    <!-- Load the libraries -->
+    <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    
+    <script>
+        function log(message) {
+            const output = document.getElementById('debug-output');
+            output.innerHTML += '<div>' + new Date().toLocaleTimeString() + ': ' + message + '</div>';
+        }
+
+        function checkLibraries() {
+            log('🔍 Checking libraries...');
+            
+            // Check html2canvas
+            if (typeof window.html2canvas !== 'undefined') {
+                log('✅ html2canvas is loaded: ' + typeof window.html2canvas);
+                log('   - Version: ' + (window.html2canvas.version || 'unknown'));
+            } else {
+                log('❌ html2canvas is NOT loaded');
+            }
+            
+            // Check jsPDF
+            if (typeof window.jsPDF !== 'undefined') {
+                log('✅ jsPDF is loaded: ' + typeof window.jsPDF);
+                log('   - Constructor: ' + (typeof window.jsPDF === 'function' ? 'Yes' : 'No'));
+            } else if (typeof window.jspdf !== 'undefined') {
+                log('✅ jsPDF is loaded as window.jspdf: ' + typeof window.jspdf);
+                if (window.jspdf.jsPDF) {
+                    log('   - jsPDF constructor available at window.jspdf.jsPDF');
+                }
+            } else {
+                log('❌ jsPDF is NOT loaded');
+            }
+            
+            // Check all window properties
+            log('🔍 All window properties containing "canvas" or "pdf":');
+            Object.keys(window).forEach(key => {
+                if (key.toLowerCase().includes('canvas') || key.toLowerCase().includes('pdf')) {
+                    log('   - ' + key + ': ' + typeof window[key]);
+                }
+            });
+        }
+
+        function testConversion() {
+            log('🚀 Testing PDF conversion...');
+            
+            // Try to find the correct jsPDF constructor
+            let jsPDFConstructor = null;
+            
+            if (typeof window.jsPDF === 'function') {
+                jsPDFConstructor = window.jsPDF;
+                log('✅ Using window.jsPDF');
+            } else if (window.jspdf && typeof window.jspdf.jsPDF === 'function') {
+                jsPDFConstructor = window.jspdf.jsPDF;
+                log('✅ Using window.jspdf.jsPDF');
+            } else {
+                log('❌ Could not find jsPDF constructor');
+                return;
+            }
+            
+            try {
+                // Test html2canvas
+                if (typeof window.html2canvas !== 'function') {
+                    throw new Error('html2canvas is not a function');
+                }
+                
+                log('✅ html2canvas is callable');
+                
+                // Test jsPDF
+                const pdf = new jsPDFConstructor();
+                log('✅ jsPDF constructor works');
+                
+                log('🎉 All libraries are working correctly!');
+                
+            } catch (error) {
+                log('❌ Error: ' + error.message);
+            }
+        }
+
+        // Auto-check when page loads
+        window.addEventListener('load', function() {
+            log('📄 Page loaded, checking libraries...');
+            setTimeout(checkLibraries, 1000); // Wait 1 second for libraries to load
+        });
+    </script>
+</body>
+</html> 
