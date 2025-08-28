@@ -6,9 +6,11 @@ A lightweight, fast Node.js and browser module for converting HTML to PDF with a
 
 - Convert HTML elements to PDF files
 - Customizable page size, orientation, and margins
-- TypeScript support with full type definitions
+- Works with both **TypeScript** and **vanilla JavaScript**
+- TypeScript support with full type definitions (optional)
 - Promise-based API
 - Comprehensive error handling
+- Browser and Node.js compatible
 
 ## Installation
 
@@ -30,6 +32,7 @@ npm install lightweight-html2pdf
 </html>
 ```
 
+#### TypeScript/ES6 Modules
 ```typescript
 import { htmlToPdf } from 'lightweight-html2pdf';
 
@@ -47,8 +50,31 @@ if (result.success) {
 }
 ```
 
+#### Vanilla JavaScript (CommonJS)
+```javascript
+const { htmlToPdf } = require('lightweight-html2pdf');
+
+async function convertToPdf() {
+  const result = await htmlToPdf({
+    id: "convert_to_pdf",
+    outputPath: 'output.pdf',
+    pageSize: 'A4',
+    orientation: 'portrait'
+  });
+
+  if (result.success) {
+    console.log(`PDF created successfully: ${result.outputPath}`);
+  } else {
+    console.error(`Error: ${result.error}`);
+  }
+}
+
+convertToPdf();
+```
+
 ### Advanced Usage with Custom Options
 
+#### TypeScript/ES6 Modules
 ```typescript
 import { htmlToPdf } from 'lightweight-html2pdf';
 
@@ -60,6 +86,254 @@ const result = await htmlToPdf({
   widthOffset: 10,
   heightOffset: 10
 });
+```
+
+#### Vanilla JavaScript (CommonJS)
+```javascript
+const { htmlToPdf } = require('lightweight-html2pdf');
+
+async function convertWithOptions() {
+  const result = await htmlToPdf({
+    id: "convert_to_pdf",
+    outputPath: 'custom.pdf',
+    pageSize: 'A3',
+    orientation: 'landscape',
+    widthOffset: 10,
+    heightOffset: 10
+  });
+  
+  return result;
+}
+```
+
+### Browser Usage (CDN)
+
+For direct browser usage without build tools:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML to PDF</title>
+    <!-- Include dependencies -->
+    <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div id="content-to-convert">
+        <h1>Hello World!</h1>
+        <p>This will be converted to PDF</p>
+    </div>
+    
+    <button onclick="convertToPdf()">Download PDF</button>
+    
+    <script type="module">
+        import { htmlToPdf } from 'https://unpkg.com/lightweight-html2pdf/dist/index.js';
+        
+        window.convertToPdf = async function() {
+            const result = await htmlToPdf({
+                id: 'content-to-convert',
+                outputPath: 'my-document.pdf'
+            });
+            
+            if (result.success) {
+                console.log('PDF downloaded!');
+            }
+        };
+    </script>
+</body>
+</html>
+```
+
+### React Usage
+
+For React applications, you can easily integrate the PDF conversion.
+
+#### Simple Function Component
+```jsx
+import React from 'react';
+import { htmlToPdf } from 'lightweight-html2pdf';
+
+function MyComponent() {
+  const handleDownloadPDF = async () => {
+    const result = await htmlToPdf({
+      id: 'pdf-content',
+      outputPath: 'my-react-document.pdf',
+      pageSize: 'A4',
+      orientation: 'portrait'
+    });
+    
+    if (result.success) {
+      console.log('PDF downloaded successfully!');
+    } else {
+      console.error('Failed to generate PDF:', result.error);
+    }
+  };
+
+  return (
+    <div>
+      <div id="pdf-content">
+        <h1>My React Content</h1>
+        <p>This content will be converted to PDF</p>
+        <div style={{ color: 'blue', fontSize: '18px' }}>
+          Styled content works too!
+        </div>
+      </div>
+      
+      <button onClick={handleDownloadPDF}>
+        Download as PDF
+      </button>
+    </div>
+  );
+}
+
+export default MyComponent;
+```
+
+#### Custom Hook for Reusability
+```jsx
+import { useState } from 'react';
+import { htmlToPdf } from 'lightweight-html2pdf';
+
+// Custom hook for PDF generation
+function usePdfGenerator() {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [error, setError] = useState(null);
+
+  const generatePdf = async (elementId, filename = 'document.pdf', options = {}) => {
+    setIsGenerating(true);
+    setError(null);
+    
+    try {
+      const result = await htmlToPdf({
+        id: elementId,
+        outputPath: filename,
+        pageSize: 'A4',
+        orientation: 'portrait',
+        ...options
+      });
+      
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      
+      return result;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  return { generatePdf, isGenerating, error };
+}
+
+// Usage in component
+function DocumentComponent() {
+  const { generatePdf, isGenerating, error } = usePdfGenerator();
+
+  const handleExport = async () => {
+    try {
+      await generatePdf('document-content', 'my-report.pdf', {
+        pageSize: 'A3',
+        orientation: 'landscape'
+      });
+      alert('PDF downloaded successfully!');
+    } catch (err) {
+      alert('Failed to generate PDF');
+    }
+  };
+
+  return (
+    <div>
+      <div id="document-content">
+        <h2>Report Content</h2>
+        <p>Your report data here...</p>
+      </div>
+      
+      <button onClick={handleExport} disabled={isGenerating}>
+        {isGenerating ? 'Generating PDF...' : 'Export to PDF'}
+      </button>
+      
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+    </div>
+  );
+}
+```
+
+#### Reusable TypeScript Component
+```tsx
+import React from 'react';
+import { htmlToPdf, HtmlToPdfOptions, HtmlToPdfResult } from 'lightweight-html2pdf';
+
+interface PDFButtonProps {
+  elementId: string;
+  filename?: string;
+  options?: Partial<HtmlToPdfOptions>;
+  onSuccess?: (result: HtmlToPdfResult) => void;
+  onError?: (error: string) => void;
+}
+
+const PDFButton: React.FC<PDFButtonProps> = ({
+  elementId,
+  filename = 'document.pdf',
+  options = {},
+  onSuccess,
+  onError
+}) => {
+  const [loading, setLoading] = React.useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    
+    try {
+      const result = await htmlToPdf({
+        id: elementId,
+        outputPath: filename,
+        pageSize: 'A4',
+        orientation: 'portrait',
+        ...options
+      });
+
+      if (result.success) {
+        onSuccess?.(result);
+      } else {
+        onError?.(result.error || 'Unknown error');
+      }
+    } catch (error) {
+      onError?.(error instanceof Error ? error.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button onClick={handleClick} disabled={loading}>
+      {loading ? 'Generating...' : 'Download PDF'}
+    </button>
+  );
+};
+
+// Usage - Just pass the element ID!
+function App() {
+  return (
+    <div>
+      <div id="my-content">
+        <h1>Hello from React!</h1>
+        <p>This will be converted to PDF</p>
+      </div>
+      
+      <PDFButton
+        elementId="my-content"
+        filename="react-document.pdf"
+        options={{ pageSize: 'A4', orientation: 'portrait' }}
+        onSuccess={() => console.log('PDF generated!')}
+        onError={(error) => console.error('Error:', error)}
+      />
+    </div>
+  );
+}
 ```
 
 ## API Reference
@@ -284,9 +558,11 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **[html2canvas](https://github.com/niklasvh/html2canvas)** - Converts HTML elements to canvas images
 - **[jsPDF](https://github.com/parallax/jsPDF)** - Generates PDF documents from images and data
 
-### Development Dependencies
+### Development Dependencies (Optional)
 
-- **TypeScript** - Type safety and compilation
+These are only needed if you're contributing to the package or want TypeScript support:
+
+- **TypeScript** - Type safety and compilation (optional for end users)
 - **Jest** - Testing framework with jsdom environment
 - **ESLint** - Code quality and consistency
 - **ts-jest** - TypeScript support for Jest
