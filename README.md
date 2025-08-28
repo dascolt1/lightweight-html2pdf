@@ -361,12 +361,6 @@ Returns a promise that resolves to an object with:
 - `outputPath?: string` - Path to the generated PDF file (if successful)
 - `error?: string` - Error message (if failed)
 
-### `htmlFileToPdf(inputPath: string, options?: Partial<HtmlToPdfOptions>): Promise<HtmlToPdfResult>`
-
-Converts an HTML file to PDF format.
-
-> **Note:** This function is not yet implemented and will return an error.
-
 ## Development
 
 ### Prerequisites
