@@ -75,8 +75,6 @@ export async function htmlToPdf(options: HtmlToPdfOptions): Promise<HtmlToPdfRes
       logging: true
     });
 
-    console.log('Canvas created:', canvas.width, 'x', canvas.height);
-
     // Create PDF document
     const pdf = new jsPDF({
       orientation: orientation,
