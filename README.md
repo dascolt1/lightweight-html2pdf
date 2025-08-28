@@ -1,6 +1,6 @@
 # lightweight-html2pdf
 
-A lightweight, fast Node.js and browser module for converting HTML to PDF with advanced styling support, customizable options, and comprehensive testing.
+A lightweight, fast browser module for converting HTML to PDF with advanced styling support, customizable options, and comprehensive testing.
 
 ## Features
 
@@ -10,7 +10,7 @@ A lightweight, fast Node.js and browser module for converting HTML to PDF with a
 - TypeScript support with full type definitions (optional)
 - Promise-based API
 - Comprehensive error handling
-- Browser and Node.js compatible
+- Browser compatible (client-side)
 
 ## Installation
 
@@ -365,10 +365,9 @@ Returns a promise that resolves to an object with:
 
 ### Prerequisites
 
-- Node.js 16.0.0 or higher
-- npm or yarn
-- jsPDF
-- html2canvas
+- Modern web browser with ES6 module support
+- npm or yarn (for installation)
+- html2canvas and jsPDF (automatically installed as dependencies)
 
 ### Setup
 
