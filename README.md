@@ -2,6 +2,8 @@
 
 A lightweight, fast browser module for converting HTML to PDF with advanced styling support, customizable options, and comprehensive testing.
 
+**🚀 All dependencies bundled together - no CDN scripts needed!**
+
 ## Features
 
 - Convert HTML elements to PDF files
@@ -106,7 +108,7 @@ async function convertWithOptions() {
 }
 ```
 
-### Browser Usage (CDN)
+### Browser Usage (Direct)
 
 For direct browser usage without build tools:
 
@@ -115,9 +117,7 @@ For direct browser usage without build tools:
 <html>
 <head>
     <title>HTML to PDF</title>
-    <!-- Include dependencies -->
-    <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <!-- No external dependencies needed! -->
 </head>
 <body>
     <div id="content-to-convert">
@@ -145,7 +145,7 @@ For direct browser usage without build tools:
 </html>
 ```
 
-**Note**: This package is designed specifically for browser environments and requires the `html2canvas` and `jsPDF` libraries to be loaded via CDN or included in your project.
+**Note**: This package is designed specifically for browser environments. All dependencies (html2canvas and jsPDF) are bundled together - no CDN scripts needed!
 
 ### React Usage
 
@@ -561,8 +561,10 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ### Runtime Dependencies
 
-- **[html2canvas](https://github.com/niklasvh/html2canvas)** - Converts HTML elements to canvas images
-- **[jsPDF](https://github.com/parallax/jsPDF)** - Generates PDF documents from images and data
+**All dependencies are bundled together!** No need to install html2canvas or jsPDF separately:
+
+- **html2canvas** - Converts HTML elements to canvas images (bundled)
+- **jsPDF** - Generates PDF documents from images and data (bundled)
 
 ### Development Dependencies (Optional)
 
@@ -576,9 +578,10 @@ These are only needed if you're contributing to the package or want TypeScript s
 ### Installation
 
 ```bash
+# Install the package (includes all dependencies)
 npm install lightweight-html2pdf
-# OR for development:
-npm install html2canvas jspdf
+
+# For development/contributing only:
 npm install --save-dev typescript jest ts-jest jest-environment-jsdom @types/jest eslint
 ```
 
