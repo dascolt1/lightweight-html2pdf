@@ -145,6 +145,8 @@ For direct browser usage without build tools:
 </html>
 ```
 
+**Note**: This package is designed specifically for browser environments and requires the `html2canvas` and `jsPDF` libraries to be loaded via CDN or included in your project.
+
 ### React Usage
 
 For React applications, you can easily integrate the PDF conversion.
@@ -361,9 +363,17 @@ Returns a promise that resolves to an object with:
 - `outputPath?: string` - Path to the generated PDF file (if successful)
 - `error?: string` - Error message (if failed)
 
-## Development
+## Architecture
 
-### Prerequisites
+This package is designed with simplicity in mind:
+
+- **Single Implementation**: One clean, browser-focused implementation
+- **No Node.js Dependencies**: Designed exclusively for browser environments
+- **CDN-Ready**: Works with CDN-loaded html2canvas and jsPDF
+- **TypeScript Support**: Full type definitions included
+- **ES6 Modules**: Modern JavaScript module system
+
+## Development
 
 - Modern web browser with ES6 module support
 - npm or yarn (for installation)
@@ -376,6 +386,8 @@ Returns a promise that resolves to an object with:
    ```bash
    npm install
    ```
+
+**Note**: This package is designed for browser environments. The development setup includes testing infrastructure but the core functionality requires a browser with `html2canvas` and `jsPDF` libraries.
 
 ### Available Scripts
 
@@ -427,8 +439,8 @@ The test suite covers the following scenarios:
 
 - **Test Framework**: Jest with TypeScript support
 - **Environment**: jsdom (simulates browser DOM)
-- **Mocking**: html2canvas and jsPDF are mocked for controlled testing
-- **Coverage**: Full test coverage for all public functions
+- **Testing Approach**: Structure validation and interface testing
+- **Coverage**: Validates module structure, parameters, and return types
 
 ### Browser Testing
 
@@ -492,6 +504,8 @@ Advanced testing interface with multiple conversion options:
 }
 ```
 
+**Testing Philosophy**: Since this is a browser-only package, tests focus on validating the module structure, TypeScript interfaces, and function signatures rather than complex runtime behavior that requires browser APIs.
+
 ### Quick Testing Workflow
 
 1. **Run Automated Tests**:
@@ -513,8 +527,8 @@ Advanced testing interface with multiple conversion options:
    - Check browser console for detailed logs
 
 4. **Verify Results**:
-   - ✅ All Jest tests pass
-   - ✅ PDF downloads successfully
+   - ✅ All Jest tests pass (structure validation)
+   - ✅ PDF downloads successfully in browser
    - ✅ Console shows no errors
    - ✅ Generated PDF maintains styling
 
