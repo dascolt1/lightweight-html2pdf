@@ -1,6 +1,6 @@
-# html2pdf
+# lightweight-html2pdf
 
-A Node.js module for converting HTML content to PDF format with customizable options.
+A lightweight, fast Node.js and browser module for converting HTML to PDF with advanced styling support, customizable options, and comprehensive testing.
 
 ## Features
 
@@ -13,7 +13,7 @@ A Node.js module for converting HTML content to PDF format with customizable opt
 ## Installation
 
 ```bash
-npm install html2pdf
+npm install lightweight-html2pdf
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ npm install html2pdf
 ```
 
 ```typescript
-import { htmlToPdf } from 'html2pdf';
+import { htmlToPdf } from 'lightweight-html2pdf';
 
 const result = await htmlToPdf({
   id: "convert_to_pdf",
@@ -50,7 +50,7 @@ if (result.success) {
 ### Advanced Usage with Custom Options
 
 ```typescript
-import { htmlToPdf } from 'html2pdf';
+import { htmlToPdf } from 'lightweight-html2pdf';
 
 const result = await htmlToPdf({
   id: "convert_to_pdf",
@@ -174,7 +174,7 @@ A comprehensive test page with advanced CSS styling:
 - **Features**: Gradients, typography, layouts, shadows, tables
 - **Content**: Feature cards, data tables, technical information
 - **Styling**: CSS Grid, Flexbox, responsive design, animations
-- **Output**: Generates `thisisawesome.pdf`
+- **Output**: Generates `lightweight-html2pdf.pdf`
 
 **Access**: `http://localhost:8080/simple-test.html`
 
@@ -242,7 +242,7 @@ Advanced testing interface with multiple conversion options:
 3. **Test in Browser**:
    - Navigate to `http://localhost:8080/simple-test.html`
    - Click "Test Module Import" button
-   - Verify PDF download: `thisisawesome.pdf`
+   - Verify PDF download: `lightweight-html2pdf.pdf`
    - Check browser console for detailed logs
 
 4. **Verify Results**:
@@ -294,10 +294,12 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ### Installation
 
 ```bash
+npm install lightweight-html2pdf
+# OR for development:
 npm install html2canvas jspdf
 npm install --save-dev typescript jest ts-jest jest-environment-jsdom @types/jest eslint
 ```
 
 ## Support
 
-If you encounter any issues or have questions, please [open an issue](https://github.com/yourusername/html2pdf/issues) on GitHub. 
+If you encounter any issues or have questions, please [open an issue](https://github.com/dascolt1/lightweight-html2pdf/issues) on GitHub. 
