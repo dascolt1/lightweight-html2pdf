@@ -1,6 +1,6 @@
 {
   "name": "lightweight-html2pdf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight, fast Node.js and browser module for converting HTML to PDF with advanced styling support, customizable options, and comprehensive testing",
   "main": "dist/index.js",
   "module": "dist/index.js",
