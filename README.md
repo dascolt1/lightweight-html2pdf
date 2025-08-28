@@ -545,11 +545,10 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - [x] Add advanced CSS styling support
 - [x] Add page size and orientation options
 - [x] Add width/height offset controls
+- [x] Add more page size options (A0, A1, A2, etc.)
 - [ ] Add watermark support
 - [ ] Add password protection
 - [ ] Add compression options
-- [ ] Add batch processing capabilities
-- [ ] Add more page size options (A0, A1, A2, etc.)
 
 ## Dependencies
 
