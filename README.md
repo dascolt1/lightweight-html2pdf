@@ -2,7 +2,7 @@
 
 A lightweight, fast browser module for converting HTML to PDF with advanced styling support, customizable options, and comprehensive testing.
 
-**🚀 All dependencies bundled together - no CDN scripts needed!**
+**🚀 All dependencies bundled together - no external scripts needed!**
 
 ## Features
 
@@ -117,7 +117,7 @@ For direct browser usage without build tools:
 <html>
 <head>
     <title>HTML to PDF</title>
-    <!-- No external dependencies needed! -->
+    <!-- All dependencies bundled - no external scripts needed! -->
 </head>
 <body>
     <div id="content-to-convert">
@@ -145,7 +145,7 @@ For direct browser usage without build tools:
 </html>
 ```
 
-**Note**: This package is designed specifically for browser environments. All dependencies (html2canvas and jsPDF) are bundled together - no CDN scripts needed!
+**Note**: This package is designed specifically for browser environments. All dependencies (html2canvas and jsPDF) are bundled together - no external scripts needed!
 
 ### React Usage
 
@@ -369,7 +369,7 @@ This package is designed with simplicity in mind:
 
 - **Single Implementation**: One clean, browser-focused implementation
 - **No Node.js Dependencies**: Designed exclusively for browser environments
-- **CDN-Ready**: Works with CDN-loaded html2canvas and jsPDF
+- **Self-Contained**: All dependencies bundled together
 - **TypeScript Support**: Full type definitions included
 - **ES6 Modules**: Modern JavaScript module system
 
@@ -387,7 +387,7 @@ This package is designed with simplicity in mind:
    npm install
    ```
 
-**Note**: This package is designed for browser environments. The development setup includes testing infrastructure but the core functionality requires a browser with `html2canvas` and `jsPDF` libraries.
+**Note**: This package is designed for browser environments. The development setup includes testing infrastructure but the core functionality works immediately since all dependencies are bundled together.
 
 ### Available Scripts
 
@@ -486,7 +486,7 @@ Advanced testing interface with multiple conversion options:
 #### Browser Testing Features
 
 - **CORS Compliance**: Local HTTP server bypasses file:// restrictions
-- **Library Loading**: CDN-loaded html2canvas and jsPDF
+- **Library Loading**: Bundled html2canvas and jsPDF
 - **Error Handling**: Comprehensive error logging and user feedback
 - **Cross-Browser**: Tested on Chrome, Firefox, Edge
 - **Responsive**: Mobile-friendly test interfaces

@@ -61,9 +61,6 @@ export async function htmlToPdf(options: HtmlToPdfOptions): Promise<HtmlToPdfRes
       throw new Error(`Element with id '${id}' not found`);
     }
 
-    console.log('Converting element:', element);
-    console.log('Element dimensions:', element.offsetWidth, 'x', element.offsetHeight);
-
     // Convert HTML to canvas using html2canvas
     const canvas = await html2canvas(element, {
       scale: 2,
